@@ -1,0 +1,6 @@
+node_modules/
+.next/
+novaconvert.db
+novaconvert.db-*
+.env
+*.log

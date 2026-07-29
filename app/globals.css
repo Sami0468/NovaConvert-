@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* NOTE: this build uses system font fallbacks because the Google Fonts CDN
+     isn't reachable in the build sandbox. Once you run this locally / deploy it,
+     swap app/layout.tsx back to next/font/google (Space Grotesk / Inter / JetBrains Mono)
+     for the exact typefaces the design was planned around — the stacks below are
+     close geometric/humanist substitutes so the design already looks right today. */
+  --font-display: "Space Grotesk", ui-sans-serif, "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Inter", ui-sans-serif, "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+
+@layer base {
+  * {
+    @apply border-line;
+  }
+  body {
+    background: #0a0e1a;
+    background-image:
+      radial-gradient(circle at 15% -10%, rgba(34, 211, 238, 0.12), transparent 45%),
+      radial-gradient(circle at 85% 0%, rgba(167, 139, 250, 0.12), transparent 45%);
+  }
+  h1, h2, h3, h4 {
+    @apply font-display;
+  }
+  ::selection {
+    background: rgba(34, 211, 238, 0.3);
+  }
+}
+
+@layer components {
+  .glass {
+    @apply bg-panel/60 backdrop-blur-xl border border-line/80;
+  }
+  .glass-card {
+    @apply glass rounded-2xl;
+  }
+  .btn-gradient {
+    @apply bg-nova-gradient text-void font-semibold rounded-xl px-6 py-3 transition-all duration-300;
+    box-shadow: 0 0 0 rgba(34, 211, 238, 0);
+  }
+  .btn-gradient:hover {
+    box-shadow: 0 8px 30px rgba(34, 211, 238, 0.35);
+    transform: translateY(-2px);
+  }
+  .btn-outline {
+    @apply border border-line rounded-xl px-6 py-3 font-semibold text-ink transition-all duration-300 hover:border-cyan/60 hover:bg-cyan/5;
+  }
+  .nova-shimmer {
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);
+    background-size: 200% 100%;
+    animation: shimmer 2.5s linear infinite;
+  }
+}
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: #0a0e1a; }
+::-webkit-scrollbar-thumb { background: #232B45; border-radius: 8px; }
+::-webkit-scrollbar-thumb:hover { background: #2e3a5e; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
