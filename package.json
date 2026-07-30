@@ -2,9 +2,9 @@
   "name": "novaconvert",
   "version": "1.0.0",
   "private": true,
-  "engines": {
-    "node": ">=22.13.0"
-  },
+ "engines": {
+  "node": "22.x"
+},
   "scripts": {
     "dev": "next dev",
     "build": "next build",
