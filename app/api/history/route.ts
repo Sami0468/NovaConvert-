@@ -10,5 +10,5 @@ export async function GET() {
   }
   const history = getHistoryForUser(session.user.email);
   const stats = getStatsForUser(session.user.email);
-  return NextResponse.json({ history, stats });
+  return NextResponse.json({ history, stats }, { headers: { "Cache-Control": "no-store, max-age=0" } });
 }

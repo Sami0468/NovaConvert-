@@ -28,7 +28,13 @@ function formatBytes(bytes: number) {
 type Stats = { filesConverted: number; storageUsed: number; favoriteTool: string };
 type HistoryItem = { id: string; file_name: string; from_format: string; to_format: string; file_size: number; created_at: string };
 
-export default function ConvertPanel() {
+export default function ConvertPanel({
+  initialHistory = [],
+  initialStats = { filesConverted: 0, storageUsed: 0, favoriteTool: "—" },
+}: {
+  initialHistory?: HistoryItem[];
+  initialStats?: Stats;
+}) {
   const [dragging, setDragging] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const [target, setTarget] = useState<string>("");
@@ -37,10 +43,15 @@ export default function ConvertPanel() {
   const [downloadUrl, setDownloadUrl] = useState<string>("");
   const [downloadName, setDownloadName] = useState<string>("");
   const [stats, setStats] = useState<Stats>({ filesConverted: 0, storageUsed: 0, favoriteTool: "—" });
-  const [history, setHistory] = useState<HistoryItem[]>([]);
+  const [history, setHistory] = useState<HistoryItem[]>(initialHistory);
+
+  useEffect(() => {
+    setStats(initialStats);
+    setHistory(initialHistory);
+  }, [initialHistory, initialStats]);
 
   const loadHistory = useCallback(async () => {
-    const res = await fetch("/api/history");
+    const res = await fetch("/api/history", { cache: "no-store" });
     if (res.ok) {
       const data = await res.json();
       setStats(data.stats);
